@@ -1,0 +1,383 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="ie=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=author content><meta name=description content="Summary In this article, we&amp;rsquo;ll be discussing the REST architectural style and demonstrate concepts through building an APplication Interface (API) in C# .NET Core! Exciting stuff, let&amp;rsquo;s get started!
+Table of Contents REST Introduction History Platform Agnostic Intended Audience Enviroment Setup Installing Dependencies Code Walkthrough Links referenced are encouraged to be explored for learning reinforcement.
+REST Introduction REpresentational State Transfer (REST) is an software architectural style that defines a set of constraints to be used for creating software."><meta name=keywords content="portfolio"><meta name=robots content="noodp"><meta name=theme-color content><link rel=canonical href=https://zackarytroop.com/notes/csharp-rest-api-intro-part-one/><title>REST Web API Introduction in C# - Part One :: Zackary Troop — Portfolio</title><link href=https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css rel=stylesheet type=text/css><link rel=stylesheet href=/main.4e5c639214707eff609bb55fe49e183dee42258a73bc90e4cc7b0a84f900798a.css><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/site.webmanifest><link rel=mask-icon href=/safari-pinned-tab.svg color><link rel="shortcut icon" href=/favicon.ico><meta name=msapplication-TileColor content><meta itemprop=name content="REST Web API Introduction in C# - Part One"><meta itemprop=description content="Summary In this article, we&rsquo;ll be discussing the REST architectural style and demonstrate concepts through building an APplication Interface (API) in C# .NET Core! Exciting stuff, let&rsquo;s get started!
+Table of Contents REST Introduction History Platform Agnostic Intended Audience Enviroment Setup Installing Dependencies Code Walkthrough Links referenced are encouraged to be explored for learning reinforcement.
+REST Introduction REpresentational State Transfer (REST) is an software architectural style that defines a set of constraints to be used for creating software."><meta itemprop=datePublished content="2020-11-04T00:00:00+00:00"><meta itemprop=dateModified content="2020-11-04T00:00:00+00:00"><meta itemprop=wordCount content="2334"><meta itemprop=image content="https://zackarytroop.com"><meta itemprop=keywords content><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://zackarytroop.com"><meta name=twitter:title content="REST Web API Introduction in C# - Part One"><meta name=twitter:description content="Summary In this article, we&rsquo;ll be discussing the REST architectural style and demonstrate concepts through building an APplication Interface (API) in C# .NET Core! Exciting stuff, let&rsquo;s get started!
+Table of Contents REST Introduction History Platform Agnostic Intended Audience Enviroment Setup Installing Dependencies Code Walkthrough Links referenced are encouraged to be explored for learning reinforcement.
+REST Introduction REpresentational State Transfer (REST) is an software architectural style that defines a set of constraints to be used for creating software."><meta property="og:title" content="REST Web API Introduction in C# - Part One"><meta property="og:description" content="Summary In this article, we&rsquo;ll be discussing the REST architectural style and demonstrate concepts through building an APplication Interface (API) in C# .NET Core! Exciting stuff, let&rsquo;s get started!
+Table of Contents REST Introduction History Platform Agnostic Intended Audience Enviroment Setup Installing Dependencies Code Walkthrough Links referenced are encouraged to be explored for learning reinforcement.
+REST Introduction REpresentational State Transfer (REST) is an software architectural style that defines a set of constraints to be used for creating software."><meta property="og:type" content="article"><meta property="og:url" content="https://zackarytroop.com/notes/csharp-rest-api-intro-part-one/"><meta property="og:image" content="https://zackarytroop.com"><meta property="article:section" content="notes"><meta property="article:published_time" content="2020-11-04T00:00:00+00:00"><meta property="article:modified_time" content="2020-11-04T00:00:00+00:00"><meta property="og:site_name" content="Zackary Troop"><meta property="article:published_time" content="2020-11-04 00:00:00 +0000 UTC"></head><body><div class=container><header class=header><span class=header__inner><a href=/ style=text-decoration:none><div class=logo><span class=logo__mark>></span>
+<span class=logo__text>ztroop</span>
+<span class=logo__cursor style=background-color:#a9a9b3></span></div></a><span class=header__right><nav class=menu><ul class=menu__inner><li><a href=/notes>Notes</a></li></ul></nav><span class=menu-trigger><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg></span></span></span></header><div class=content><main class=post><div class=post-info></p></div><article><h2 class=post-title><a href=https://zackarytroop.com/notes/csharp-rest-api-intro-part-one/>REST Web API Introduction in C# - Part One</a></h2><div class=post-content><h1 id=summary>Summary</h1><p>In this article, we&rsquo;ll be discussing the REST architectural style and demonstrate concepts through
+building an <strong>AP</strong>plication <strong>I</strong>nterface (<strong>API</strong>) in C# .NET Core! Exciting stuff, let&rsquo;s get started!</p><h5 id=table-of-contents>Table of Contents</h5><ol><li><a href=#rest-introduction>REST Introduction</a></li><li><a href=#history>History</a></li><li><a href=#platform-agnostic>Platform Agnostic</a></li><li><a href=#intended-audience>Intended Audience</a></li><li><a href=#environment-setup>Enviroment Setup</a></li><li><a href=#installing-dependencies>Installing Dependencies</a></li><li><a href=#code-walkthrough>Code Walkthrough</a></li></ol><p>Links referenced are <em>encouraged</em> to be explored for learning reinforcement.</p><h2 id=rest-introduction>REST Introduction</h2><p><strong>RE</strong>presentational <strong>S</strong>tate <strong>T</strong>ransfer (<strong>REST</strong>) is an software architectural style that defines
+a set of constraints to be used for creating software. It was originally proposed by Roy Fielding
+in his <a href=https://www.ics.uci.edu/~fielding/pubs/dissertation/fielding_dissertation.pdf>dissertation</a>.
+It&rsquo;s important to note that REST is not only applied to the web, via HTTP protocol.
+Other protocols like <a href=https://tools.ietf.org/html/rfc7252>CoAP</a> also employ REST principles.
+This architectural style provides conventions that makes development easier for engineers and improves
+interoperability between systems.</p><p>See <a href=https://en.wikipedia.org/wiki/Representational_state_transfer>Representation State Transfer</a> for more information.</p><h2 id=history>History</h2><p>In the past, developing C# web services typically involved using <strong>S</strong>imple <strong>O</strong>bject <strong>A</strong>ccess
+<strong>P</strong>rotocol (<strong>SOAP</strong>), a standards-based web services access protocol that&rsquo;s been around for a long
+time. This, along with <strong>W</strong>indows <strong>C</strong>ommunication <strong>F</strong>oundation (<strong>WCF</strong>) are on their way out.</p><p>At this point, I think you&rsquo;ll only be interacting with these from a legacy maintenance point of view.
+(I can only hope for your sake, anyway!)</p><p>REST permits many different data formats including plain text, HTML, XML, and JSON, which yields
+better compatibility between systems, unlike SOAP.</p><h2 id=intended-audience>Intended Audience</h2><p>This article assumes that the reader has an understanding of common programming idioms and patterns in the C# language. Experience with the command prompt or terminal is recommended, but not required. We&rsquo;ll touch on various concepts, but further research might be required if you&rsquo;re just starting out.</p><h2 id=tooling>Tooling</h2><p>We&rsquo;ll be using a terminal (or command prompt) and Visual Code for code editing.
+I&rsquo;ve found that developers learning C# become too dependent on Visual Studio. In general, I recommend <a href=https://code.visualstudio.com/>Visual Code</a>, as it&rsquo;s an open-source and cross-platform editor.</p><h4 id=platform-agnostic>Platform Agnostic</h4><p>We&rsquo;ll be using .NET Core instead of .NET Framework. The reason is simple, we&rsquo;re focusing on technologies
+that are relevant for the future, not the past. See <a href=https://devblogs.microsoft.com/dotnet/net-core-is-the-future-of-net/>.NET Core is the Future of .NET</a></p><blockquote><p>New applications should be built on .NET Core. .NET Core is where future investments in .NET will happen. Existing applications are safe to remain on .NET Framework which will be supported. Existing applications that want to take advantage of the new features in .NET should consider moving to .NET Core.</p></blockquote><p>This has the added benefit of being able to develop on any system; Windows, Mac or Linux!</p><h1 id=demonstration>Demonstration</h1><p>Now that we&rsquo;ve finished the preamble, let&rsquo;s dig into the activity!
+This was developed on Ubuntu Linux, but should be largely transferable to other operating systems.</p><h2 id=environment>Environment</h2><p>Open up your terminal and create a new project with the commands below.</p><p>In Linux:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sh data-lang=sh><span style=display:flex><span>mkdir -p ~/projects/CSharpRESTDemo <span style=color:#75715e># Creates all directories (nested).</span>
+</span></span><span style=display:flex><span>cd ~/projects/CSharpRESTDemo <span style=color:#75715e># Change to the top-level directory we created.</span>
+</span></span><span style=display:flex><span>dotnet new console <span style=color:#75715e># Creates C# project files using the console template.</span>
+</span></span></code></pre></div><p>In Windows:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sh data-lang=sh><span style=display:flex><span>mkdir <span style=color:#e6db74>&#34;%USERPROFILE%\projects&#34;</span> <span style=color:#75715e># Creates the &#34;projects&#34; directory.</span>
+</span></span><span style=display:flex><span>cd /d <span style=color:#e6db74>&#34;%USERPROFILE%\projects&#34;</span> <span style=color:#75715e># Change to the directory we created.</span>
+</span></span><span style=display:flex><span>mkdir CSharpRESTDemo <span style=color:#75715e># Creates a directory for our project.</span>
+</span></span><span style=display:flex><span>cd CSharpRESTDemo <span style=color:#75715e># Change to the directory we just created.</span>
+</span></span><span style=display:flex><span>dotnet new console <span style=color:#75715e># Creates C# project files using the console template.</span>
+</span></span></code></pre></div><p>Why are we using the <code>console</code> template instead of <code>web</code>? Well, we want to start with a minimal
+configuration and build on it throughout this article. In the future though, the <code>web</code> template
+can save you some time.</p><p>We should now see two files and a directory!</p><ol><li><code>CSharpRESTDemo.csproj</code> is a project file that contains the list of files included in a project along with the references to system assemblies.</li><li><code>Program.cs</code> is the entry point of our program.</li><li><code>obj</code> is a directory used to store temporary object files and other files used in order to create the final binary during the compilation process. The <code>bin</code> folder is the output folder for complete binaries (or assemblies).</li></ol><p>If you&rsquo;re using Microsoft Visual Studio, you will also have a <code>.sln</code> extension file. That&rsquo;s a structure file used for organizing projects in Microsoft Visual Studio.</p><h2 id=installing-dependencies>Installing Dependencies</h2><p>Before we dig into the code, we&rsquo;ll need to apply some dependencies that are not included in the standard library.
+In the terminal, we&rsquo;ll need to be in the working directory of <code>CSharpRESTDemo</code> and run the following commands:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sh data-lang=sh><span style=display:flex><span>dotnet add package AutoMapper --version 8.0.0
+</span></span><span style=display:flex><span>dotnet add package AutoMapper.Extensions.Microsoft.DependencyInjection --version 6.0.0
+</span></span><span style=display:flex><span>dotnet add package Microsoft.AspNetCore.App
+</span></span><span style=display:flex><span>dotnet add package Microsoft.AspNetCore.JsonPatch --version 3.1.9
+</span></span><span style=display:flex><span>dotnet add package Microsoft.AspNetCore.Razor.Design --version 3.1.9
+</span></span><span style=display:flex><span>dotnet add package Microsoft.EntityFrameworkCore --version 3.1.9
+</span></span><span style=display:flex><span>dotnet add package Microsoft.EntityFrameworkCore.Design --version 3.1.9
+</span></span><span style=display:flex><span>dotnet add package Microsoft.EntityFrameworkCore.InMemory --version 3.1.9
+</span></span><span style=display:flex><span>dotnet add package Microsoft.EntityFrameworkCore.SqlServer --version 3.1.9
+</span></span></code></pre></div><ol><li><strong>AutoMapper</strong> is used in model projection scenarios to flatten complex object models to DTOs and other simple objects.</li><li><strong>AspNetCore</strong> provides a framework and tooling for building web apps and services in .NET Core.</li><li><strong>EntityFrameworkCore</strong> is a modern <strong>O</strong>bject <strong>R</strong>elational <strong>M</strong>apper (<strong>ORM</strong>) for .NET Core. It supports <a href=https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/linq/>LINQ</a> queries, change tracking, updates, and schema migrations.</li></ol><h2 id=code-walkthrough>Code Walkthrough</h2><p>I&rsquo;ll be omitting <code>using</code> import lines for the sake of brevity. You can always review the code from the <a href=https://github.com/ztroop/csharp-rest-api-example>GitHub repository</a>.</p><hr><p>In <code>Program.cs</code>, replace contents with the following:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cs data-lang=cs><span style=display:flex><span><span style=color:#66d9ef>namespace</span> CSharpRESTDemo
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Program</span>
+</span></span><span style=display:flex><span>    {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>void</span> Main(<span style=color:#66d9ef>string</span>[] args)
+</span></span><span style=display:flex><span>        {
+</span></span><span style=display:flex><span>            CreateWebHostBuilder(args).Build().Run();
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>static</span> IWebHostBuilder CreateWebHostBuilder(<span style=color:#66d9ef>string</span>[] args) =&gt;
+</span></span><span style=display:flex><span>            WebHost.CreateDefaultBuilder(args)
+</span></span><span style=display:flex><span>                .UseStartup&lt;Startup&gt;();
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>We&rsquo;re creating a host using an instance of <code>IWebHostBuilder</code>. This is typically performed in the
+app&rsquo;s entry point, the <code>Main</code> method as shown above.</p><p>When setting up a host, <code>Configure</code> and <code>ConfigureServices</code> methods can be provided. We specified
+our own <code>Startup</code> class, which we&rsquo;ll examine next. The <code>Startup</code> class <em>must</em> define a <code>Configure</code> method.</p><p>See <a href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/host/web-host?view=aspnetcore-3.1#set-up-a-host">ASP.NET Core Web Host</a> for more information on how this works.</p><hr><p>Create a new file <code>Startup.cs</code> with the following:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cs data-lang=cs><span style=display:flex><span><span style=color:#66d9ef>namespace</span> CSharpRESTDemo
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Startup</span>
+</span></span><span style=display:flex><span>    {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>public</span> IConfigurationRoot Configuration { <span style=color:#66d9ef>get</span>; }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>public</span> Startup()
+</span></span><span style=display:flex><span>        {
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>var</span> builder = <span style=color:#66d9ef>new</span> ConfigurationBuilder()
+</span></span><span style=display:flex><span>                .SetBasePath(Directory.GetCurrentDirectory())
+</span></span><span style=display:flex><span>                .AddJsonFile(<span style=color:#e6db74>&#34;appsettings.json&#34;</span>);
+</span></span><span style=display:flex><span>            Configuration = builder.Build();
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>void</span> ConfigureServices(IServiceCollection services)
+</span></span><span style=display:flex><span>        {
+</span></span><span style=display:flex><span>            services.AddAutoMapper(<span style=color:#66d9ef>typeof</span>(AutoMapping));
+</span></span><span style=display:flex><span>            services.AddDbContext&lt;DemoDbContext&gt;(
+</span></span><span style=display:flex><span>                opt =&gt; opt.UseInMemoryDatabase(databaseName: <span style=color:#e6db74>&#34;InMemoryDb&#34;</span>)
+</span></span><span style=display:flex><span>            );
+</span></span><span style=display:flex><span>            services.AddCors(opt =&gt; {
+</span></span><span style=display:flex><span>                opt.AddPolicy(<span style=color:#e6db74>&#34;AllowMyOrigin&#34;</span>, builder =&gt; builder
+</span></span><span style=display:flex><span>                    .WithOrigins(<span style=color:#e6db74>&#34;http://localhost:3000&#34;</span>)
+</span></span><span style=display:flex><span>                    .AllowAnyMethod()
+</span></span><span style=display:flex><span>                    .AllowAnyHeader()
+</span></span><span style=display:flex><span>                );
+</span></span><span style=display:flex><span>            });
+</span></span><span style=display:flex><span>            services.AddScoped&lt;ICustomerRepository, CustomerRepository&gt;();
+</span></span><span style=display:flex><span>            services.AddMvc(opt =&gt; opt.EnableEndpointRouting = <span style=color:#66d9ef>false</span>);
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>void</span> Configure(IApplicationBuilder app, IWebHostEnvironment env)
+</span></span><span style=display:flex><span>        {
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>if</span> (env.IsDevelopment())
+</span></span><span style=display:flex><span>            {
+</span></span><span style=display:flex><span>                app.UseDeveloperExceptionPage();
+</span></span><span style=display:flex><span>            }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            app.UseCors(<span style=color:#e6db74>&#34;AllowMyOrigin&#34;</span>);
+</span></span><span style=display:flex><span>            app.UseMvc();
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>The <code>Startup.cs</code> class is where:</p><ol><li>Services required by the app are configured.</li><li>The app&rsquo;s request handling pipeline is defined, as a series of middleware components.</li></ol><p>There are <em>two</em> methods of interest in this class:</p><ol><li><code>ConfigureServices</code> is optional and used to configure <a href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/dependency-injection?view=aspnetcore-3.1">dependency injection</a>.</li><li><code>Configure</code> is used to set up middlewares, routing rules, etc.</li></ol><p>In the <code>Startup</code> constructor, we explicitly extract configuration values from <code>appsettings.json</code>. This configuration pattern is common, but alternatively, the <a href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/options?view=aspnetcore-3.1">options pattern</a> <em>does</em> offer a greater separation of concerns.</p><p>In the <code>ConfigureServices</code> method, we&rsquo;re doing the following:</p><ul><li><strong>AddAutoMapper</strong> registers AutoMapper and defines a <a href=https://docs.automapper.org/en/stable/Configuration.html#profile-instances>profile</a>. We&rsquo;re using this to map <strong>D</strong>ata <strong>T</strong>ransfer <strong>O</strong>bjects (<strong>DTO</strong>), but more on that later.</li><li><strong>AddDbContext</strong> registers EntityFramework, where we specify our context and use of a in-memory database.</li><li><strong>AddCors</strong> registers a CORS policy, which we will reference in the <code>Configure</code> method. <a href="https://docs.microsoft.com/en-us/aspnet/core/security/cors?view=aspnetcore-3.1">CORS</a> is a lengthy topic, but you should read about it if you&rsquo;re unfamiliar with it. Many developers simply bypass it by <em>allowing any origin</em>, but this can lead to security problems.</li><li><strong>AddScoped</strong> registers a scoped lifetime, the <a href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/dependency-injection?view=aspnetcore-3.1#service-lifetimes">lifetime</a> of a single request. We&rsquo;ll talk more about <em>repositories</em> later.</li><li><strong>AddMvc</strong> registers MVC services.</li></ul><p>In the <code>Configure</code> method, we check to see if the application is running in development mode to determine if we should show the user an exception page if something goes wrong. You wouldn&rsquo;t want to show a stack trace to the user in a production environment. After that, we tell our application to add MVC to the request execution pipeline. MVC will allow us to start defining routes and controllers.</p><p>See <a href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/?view=aspnetcore-3.1&tabs=linux">ASP.NET Core Fundamentals</a> for more information.</p><hr><p>Create a new folder called <code>Entities</code> and create a new file <code>DemoDbContext.cs</code> with the following:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cs data-lang=cs><span style=display:flex><span><span style=color:#66d9ef>namespace</span> CSharpRESTDemo.Entities
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>DemoDbContext</span> : DbContext
+</span></span><span style=display:flex><span>    {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>public</span> DemoDbContext(DbContextOptions&lt;DemoDbContext&gt; options) : <span style=color:#66d9ef>base</span>(options)
+</span></span><span style=display:flex><span>        {
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>public</span> DbSet&lt;Customer&gt; Customers { <span style=color:#66d9ef>get</span>; <span style=color:#66d9ef>set</span>; }
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>We create a <code>DbSet</code> for <code>Customers</code>. A <code>DbSet</code> provides a mapping to the database table object.</p><hr><p>In the <code>Entities</code> folder, create a file <code>Customer.cs</code> with the following:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cs data-lang=cs><span style=display:flex><span><span style=color:#66d9ef>namespace</span> CSharpRESTDemo.Entities
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Customer</span>
+</span></span><span style=display:flex><span>    {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>public</span> Guid Id { <span style=color:#66d9ef>get</span>; <span style=color:#66d9ef>set</span>; }
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>string</span> Firstname { <span style=color:#66d9ef>get</span>; <span style=color:#66d9ef>set</span>; }
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>string</span> Lastname { <span style=color:#66d9ef>get</span>; <span style=color:#66d9ef>set</span>; }
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>int</span> Age { <span style=color:#66d9ef>get</span>; <span style=color:#66d9ef>set</span>; }
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>We define a <code>Customer</code> entity with <em>four</em> properties. We&rsquo;re using <code>Guid</code> in this example to demonstrate
+that using an <code>int</code> is not always an appropriate choice. You wouldn&rsquo;t want to allow for the possibility
+of users iterating over your records in some cases.</p><hr><p>Next, we&rsquo;ll create a new directory called <code>Repositories</code> and create a file <code>CustomerRepository.cs</code> with the following:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cs data-lang=cs><span style=display:flex><span><span style=color:#66d9ef>namespace</span> CSharpRESTDemo.Repositories
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>CustomerRepository</span> : ICustomerRepository
+</span></span><span style=display:flex><span>    {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>private</span> DemoDbContext _context;
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>public</span> CustomerRepository(DemoDbContext context)
+</span></span><span style=display:flex><span>        {
+</span></span><span style=display:flex><span>            _context = context;
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>public</span> IQueryable&lt;Customer&gt; GetAll()
+</span></span><span style=display:flex><span>        {
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>return</span> _context.Customers;
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>public</span> Customer GetSingle(Guid id)
+</span></span><span style=display:flex><span>        {
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>return</span> _context.Customers.FirstOrDefault(x =&gt; x.Id == id);
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>void</span> Add(Customer item)
+</span></span><span style=display:flex><span>        {
+</span></span><span style=display:flex><span>            _context.Customers.Add(item);
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>void</span> Delete(Guid id)
+</span></span><span style=display:flex><span>        {
+</span></span><span style=display:flex><span>            Customer Customer = GetSingle(id);
+</span></span><span style=display:flex><span>            _context.Customers.Remove(Customer);
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>void</span> Update(Customer item)
+</span></span><span style=display:flex><span>        {
+</span></span><span style=display:flex><span>            _context.Customers.Update(item);
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>bool</span> Save()
+</span></span><span style=display:flex><span>        {
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>return</span> _context.SaveChanges() &gt;= <span style=color:#ae81ff>0</span>;
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>Now we&rsquo;ll create an interface for the repository we just created. Create a file <code>ICustomerRepository.cs</code> with the following:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cs data-lang=cs><span style=display:flex><span><span style=color:#66d9ef>namespace</span> CSharpRESTDemo.Repositories
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>interface</span> <span style=color:#a6e22e>ICustomerRepository</span>
+</span></span><span style=display:flex><span>    {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>void</span> Add(Customer item);
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>void</span> Delete(Guid id);
+</span></span><span style=display:flex><span>        IQueryable&lt;Customer&gt; GetAll();
+</span></span><span style=display:flex><span>        Customer GetSingle(Guid id);
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>bool</span> Save();
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>void</span> Update(Customer item);
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>The <em>repository</em> pattern in C# mediates between the domain and data mapping layers. It is
+mostly used where we need to modify the data before passing to the next stage, providing
+a clean separation and one-way dependency between the domain and data mapping layers.</p><p>There are <em>two</em> clear advantages:</p><ol><li><strong>Improving Testability</strong>. We can create an interface of the repository, and reference it.
+We can make a fake object (using <code>moq</code> for example) which implements that interface.</li><li><strong>Improved Modularity</strong>. We can swap out with various data stores without changing the underlying API.</li></ol><hr><p>Create a new folder called <code>Dtos</code> and create a file <code>CustomerDto.cs</code> with the following:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cs data-lang=cs><span style=display:flex><span><span style=color:#66d9ef>namespace</span> CSharpRESTDemo.Dtos
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>CustomerDto</span>
+</span></span><span style=display:flex><span>    {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>public</span> Guid Id { <span style=color:#66d9ef>get</span>; <span style=color:#66d9ef>set</span>; }
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>string</span> Firstname { <span style=color:#66d9ef>get</span>; <span style=color:#66d9ef>set</span>; }
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>string</span> Lastname { <span style=color:#66d9ef>get</span>; <span style=color:#66d9ef>set</span>; }
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>int</span> Age { <span style=color:#66d9ef>get</span>; <span style=color:#66d9ef>set</span>; }
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>Create a file <code>CustomerCreateDto.cs</code> with the following:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cs data-lang=cs><span style=display:flex><span><span style=color:#66d9ef>namespace</span> CSharpRESTDemo.Dtos
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>CustomerCreateDto</span>
+</span></span><span style=display:flex><span>    {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>string</span> Firstname { <span style=color:#66d9ef>get</span>; <span style=color:#66d9ef>set</span>; }
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>string</span> Lastname { <span style=color:#66d9ef>get</span>; <span style=color:#66d9ef>set</span>; }
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>int</span> Age { <span style=color:#66d9ef>get</span>; <span style=color:#66d9ef>set</span>; }
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>Create a file <code>CustomerUpdateDto.cs</code> with the following: (yes, same as previous)</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cs data-lang=cs><span style=display:flex><span><span style=color:#66d9ef>namespace</span> CSharpRESTDemo.Dtos
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>CustomerUpdateDto</span>
+</span></span><span style=display:flex><span>    {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>string</span> Firstname { <span style=color:#66d9ef>get</span>; <span style=color:#66d9ef>set</span>; }
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>string</span> Lastname { <span style=color:#66d9ef>get</span>; <span style=color:#66d9ef>set</span>; }
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>int</span> Age { <span style=color:#66d9ef>get</span>; <span style=color:#66d9ef>set</span>; }
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>A <strong>D</strong>ata <strong>T</strong>ransfer <strong>O</strong>bject (<strong>DTO</strong>) is an object that is used to encapsulate data. As of this moment, our code would map directly to the database fields. That&rsquo;s not always desirable. Sometimes you want to change the shape of the data for the following reasons:</p><ul><li><strong>Hide</strong> particular properties that clients are not supposed to view.</li><li><strong>Omit</strong> some properties in order to improve performance.</li><li><strong>Decouple</strong> the service layer from the database layer.</li></ul><p>See <a href=https://docs.microsoft.com/en-us/aspnet/web-api/overview/data/using-web-api-with-entity-framework/part-5>Create Data Transfer Objects</a> for more information.</p><hr><p>In the project folder, create a file <code>AutoMapping.cs</code> with the following:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cs data-lang=cs><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>AutoMapping</span> : Profile
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> AutoMapping()
+</span></span><span style=display:flex><span>    {
+</span></span><span style=display:flex><span>        CreateMap&lt;Customer, CustomerDto&gt;();
+</span></span><span style=display:flex><span>        CreateMap&lt;CustomerDto, Customer&gt;();
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        CreateMap&lt;Customer, CustomerCreateDto&gt;();
+</span></span><span style=display:flex><span>        CreateMap&lt;CustomerCreateDto, Customer&gt;();
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        CreateMap&lt;Customer, CustomerUpdateDto&gt;();
+</span></span><span style=display:flex><span>        CreateMap&lt;CustomerUpdateDto, Customer&gt;();
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>This creates a mapping between the DTO and entity objects.</p><hr><p>Add a folder <code>Controllers</code> and create a file <code>CustomerController.cs</code> with the following:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cs data-lang=cs><span style=display:flex><span><span style=color:#66d9ef>using</span> AutoMapper;
+</span></span><span style=display:flex><span><span style=color:#66d9ef>using</span> CSharpRESTDemo.Dtos;
+</span></span><span style=display:flex><span><span style=color:#66d9ef>using</span> CSharpRESTDemo.Entities;
+</span></span><span style=display:flex><span><span style=color:#66d9ef>using</span> CSharpRESTDemo.Repositories;
+</span></span><span style=display:flex><span><span style=color:#66d9ef>using</span> Microsoft.AspNetCore.JsonPatch;
+</span></span><span style=display:flex><span><span style=color:#66d9ef>using</span> Microsoft.AspNetCore.Mvc;
+</span></span><span style=display:flex><span><span style=color:#66d9ef>using</span> System;
+</span></span><span style=display:flex><span><span style=color:#66d9ef>using</span> System.Linq;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>namespace</span> CSharpRESTDemo.Controllers
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span><span style=color:#a6e22e>    [Route(&#34;api/[controller]</span><span style=color:#e6db74>&#34;)]
+</span></span></span><span style=display:flex><span><span style=color:#e6db74></span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>CustomersController</span> : Controller
+</span></span><span style=display:flex><span>    {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>private</span> IMapper _mapper;
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>private</span> ICustomerRepository _customerRepository;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>public</span> CustomersController(IMapper mapper, ICustomerRepository customerRepository)
+</span></span><span style=display:flex><span>        {
+</span></span><span style=display:flex><span>            _mapper = mapper;
+</span></span><span style=display:flex><span>            _customerRepository = customerRepository;
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span><span style=color:#a6e22e>
+</span></span></span><span style=display:flex><span><span style=color:#a6e22e>        [HttpGet]</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>public</span> IActionResult GetAllCustomers()
+</span></span><span style=display:flex><span>        {
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>var</span> allCustomers = _customerRepository.GetAll().ToList();
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>var</span> allCustomersDto = allCustomers.Select(x =&gt; _mapper.Map&lt;CustomerDto&gt;(x));
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>return</span> Ok(allCustomersDto);
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span><span style=color:#a6e22e>
+</span></span></span><span style=display:flex><span><span style=color:#a6e22e>        [HttpGet]</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>        [Route(&#34;{id}&#34;, Name = &#34;GetSingleCustomer&#34;)]</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>public</span> IActionResult GetSingleCustomer(Guid id)
+</span></span><span style=display:flex><span>        {
+</span></span><span style=display:flex><span>            Customer customerFromRepo = _customerRepository.GetSingle(id);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>if</span> (customerFromRepo == <span style=color:#66d9ef>null</span>)
+</span></span><span style=display:flex><span>            {
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>return</span> NotFound();
+</span></span><span style=display:flex><span>            }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>return</span> Ok(_mapper.Map&lt;CustomerDto&gt;(customerFromRepo));
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span><span style=color:#a6e22e>
+</span></span></span><span style=display:flex><span><span style=color:#a6e22e>        [HttpPost]</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>public</span> IActionResult AddCustomer([FromBody] CustomerCreateDto customerCreateDto)
+</span></span><span style=display:flex><span>        {
+</span></span><span style=display:flex><span>            Customer toAdd = _mapper.Map&lt;Customer&gt;(customerCreateDto);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            _customerRepository.Add(toAdd);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>bool</span> result = _customerRepository.Save();
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>if</span> (!result)
+</span></span><span style=display:flex><span>            {
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>new</span> StatusCodeResult(<span style=color:#ae81ff>500</span>);
+</span></span><span style=display:flex><span>            }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>return</span> CreatedAtRoute(<span style=color:#e6db74>&#34;GetSingleCustomer&#34;</span>, <span style=color:#66d9ef>new</span> { id = toAdd.Id }, _mapper.Map&lt;CustomerDto&gt;(toAdd));
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span><span style=color:#a6e22e>
+</span></span></span><span style=display:flex><span><span style=color:#a6e22e>        [HttpPut]</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>        [Route(&#34;{id}&#34;)]</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>public</span> IActionResult UpdateCustomer(Guid id, [FromBody] CustomerUpdateDto updateDto)
+</span></span><span style=display:flex><span>        {
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>var</span> existingCustomer = _customerRepository.GetSingle(id);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>if</span> (existingCustomer == <span style=color:#66d9ef>null</span>)
+</span></span><span style=display:flex><span>            {
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>return</span> NotFound();
+</span></span><span style=display:flex><span>            }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            _mapper.Map(updateDto, existingCustomer);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            _customerRepository.Update(existingCustomer);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>bool</span> result = _customerRepository.Save();
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>if</span> (!result)
+</span></span><span style=display:flex><span>            {
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>new</span> StatusCodeResult(<span style=color:#ae81ff>500</span>);
+</span></span><span style=display:flex><span>            }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>return</span> Ok(_mapper.Map&lt;CustomerDto&gt;(existingCustomer));
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span><span style=color:#a6e22e>
+</span></span></span><span style=display:flex><span><span style=color:#a6e22e>        [HttpPatch]</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>        [Route(&#34;{id}&#34;)]</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>public</span> IActionResult PartiallyUpdate(Guid id, [FromBody] JsonPatchDocument&lt;CustomerUpdateDto&gt; customerPatchDoc)
+</span></span><span style=display:flex><span>        {
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>if</span> (customerPatchDoc == <span style=color:#66d9ef>null</span>)
+</span></span><span style=display:flex><span>            {
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>return</span> BadRequest();
+</span></span><span style=display:flex><span>            }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>var</span> existingCustomer = _customerRepository.GetSingle(id);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>if</span> (existingCustomer == <span style=color:#66d9ef>null</span>)
+</span></span><span style=display:flex><span>            {
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>return</span> NotFound();
+</span></span><span style=display:flex><span>            }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>var</span> customerToPatch = _mapper.Map&lt;CustomerUpdateDto&gt;(existingCustomer);
+</span></span><span style=display:flex><span>            customerPatchDoc.ApplyTo(customerToPatch);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            _mapper.Map(customerToPatch, existingCustomer);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            _customerRepository.Update(existingCustomer);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>bool</span> result = _customerRepository.Save();
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>if</span> (!result)
+</span></span><span style=display:flex><span>            {
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>new</span> StatusCodeResult(<span style=color:#ae81ff>500</span>);
+</span></span><span style=display:flex><span>            }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>return</span> Ok(_mapper.Map&lt;CustomerDto&gt;(existingCustomer));
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span><span style=color:#a6e22e>
+</span></span></span><span style=display:flex><span><span style=color:#a6e22e>
+</span></span></span><span style=display:flex><span><span style=color:#a6e22e>        [HttpDelete]</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>        [Route(&#34;{id}&#34;)]</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>public</span> IActionResult Remove(Guid id)
+</span></span><span style=display:flex><span>        {
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>var</span> existingCustomer = _customerRepository.GetSingle(id);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>if</span> (existingCustomer == <span style=color:#66d9ef>null</span>)
+</span></span><span style=display:flex><span>            {
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>return</span> NotFound();
+</span></span><span style=display:flex><span>            }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            _customerRepository.Delete(id);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>bool</span> result = _customerRepository.Save();
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>if</span> (!result)
+</span></span><span style=display:flex><span>            {
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>new</span> StatusCodeResult(<span style=color:#ae81ff>500</span>);
+</span></span><span style=display:flex><span>            }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>return</span> NoContent();
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>Each method in the <code>CustomersController</code> class has an attribute that defines an HTTP verb and route.
+When a client interacts with <code>api/customer</code> with a <code>POST</code> request method, it will execute the code
+in the <code>AddCustomer</code> method as an example.</p><p>Note the fact that we do not alter the shape of the data at this layer. We&rsquo;ve been using
+<em>repositories</em> and <em>data transfer objects</em> to separate our layers. On a larger scale project,
+with many developers involved, having this insulation layer is a life-saver.</p><hr><p>At this point in time, you should have a working application after an initial migration of
+the database.</p><blockquote><p>The migrations feature in EF Core provides a way to incrementally update the database schema to keep it in sync with the application&rsquo;s data model while preserving existing data in the database.</p></blockquote><p>See <a href="https://docs.microsoft.com/en-us/ef/core/managing-schemas/migrations/?tabs=dotnet-core-cli">Migrations Overview</a> for more information.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sh data-lang=sh><span style=display:flex><span>dotnet ef migrations add InitialCreate
+</span></span><span style=display:flex><span>dotnet ef database update
+</span></span><span style=display:flex><span>dotnet run
+</span></span></code></pre></div><p>Check out <a href=@/notes/csharprestapi-2.md>Part Two</a>!</p></div></article><hr><div class=post-info></div></main></div><footer class=footer></footer></div><script type=text/javascript src=/bundle.min.bb2c6bc3ed452ca4759660e4020811f248bc2320081559e8a32d8b0092773852941133639d35e8370d03d3ddaa750b1edd6b343c5bd22a55d5bdeae8f648f49b.js integrity="sha512-uyxrw+1FLKR1lmDkAggR8ki8IyAIFVnooy2LAJJ3OFKUETNjnTXoNw0D092qdQse3Ws0PFvSKlXVvero9kj0mw=="></script></body></html>
