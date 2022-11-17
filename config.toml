@@ -1,0 +1,51 @@
+baseurl      = "https://zackarytroop.com"
+title        = "Portfolio"
+languageCode = "en-us"
+theme        = "hello-friend-ng"
+paginate     = 10
+
+[params]
+  dateform        = "Jan 2, 2006"
+  dateformShort   = "Jan 2"
+  dateformNum     = "2006-01-02"
+  dateformNumTime = "2006-01-02 15:04"
+
+  homeSubtitle = "Software Developer, Mentor and Advocate"
+  disableReadOtherPosts = false
+  enableSharingButtons = false
+  description = "Portfolio"
+  keywords = "portfolio"
+  images = [""]
+  avatarURL = "images/avatar.jpg"
+
+[[params.social]]
+  name = "github"
+  url = "https://github.com/ztroop"
+
+[[params.social]]
+  name = "linkedin"
+  url = "https://www.linkedin.com/in/zackary-troop-77306773/"
+
+[[params.social]]
+  name = "youtube"
+  url = "https://www.youtube.com/channel/UCulqjAqU0--wW5LmJ3f2iIg"
+
+[taxonomies]
+  category = "blog"
+  tag      = "tags"
+  series   = "series"
+
+
+[languages]
+  [languages.en]
+    title = "Zackary Troop"
+    subtitle = "Portfolio"
+
+    [languages.en.params.logo]
+      logoText = "ztroop"
+      logoHomeLink = "/"
+
+  [[menu.main]]
+    identifier = "notes"
+    name       = "Notes"
+    url        = "/notes"
