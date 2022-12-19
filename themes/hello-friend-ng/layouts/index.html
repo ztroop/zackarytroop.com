@@ -1,19 +1,20 @@
-{{ define "body" }}
-    <body class="{{ if .Site.Params.backgroundImage }} background-image" style="background-image: url('{{ .Site.Params.backgroundImage }}');" {{ else }}"{{ end }}>
-{{ end }}
-
 {{ define "main" }}
     <main aria-role="main">
         <div>
             {{ if (isset .Site.Params "avatarurl") }}
                 {{ with .Site.Params.avatarURL }}
-                    <img src="{{ . | relURL }}" alt="avatar" class="circle" style="max-width:200px" />
+                    <img src="{{ . | relURL }}" alt="avatar" class="circle" style="max-width:200px; margin-top: 2rem;" />
                 {{ end }}
             {{ end }}
 
-            <h1>{{ .Site.Title }}</h1>
+            <h1 style="margin: 1rem 0 0 0;">{{ .Site.Title }}</h1>
 
-            {{ partial "subtitle.html" . }}
+
+            <h3 style="justify-content: center; margin: .5rem 0 1.5rem 0">
+                <a href="" class="typewrite" data-period="2000" data-type='[ "Software Developer", "Consultant", "Content Creator", "Developer Advocate", "Security Professional" ]' style="text-decoration: none; font-weight: normal;">
+                    <!-- <span class="wrap"></span> -->
+                </a>
+            </h3>
 
             {{- with .Site.Params.social }}
                 <div>
